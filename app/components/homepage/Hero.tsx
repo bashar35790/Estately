@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import { ArrowRight } from "lucide-react";
@@ -32,6 +31,9 @@ export default function HeroSection() {
                     <h1 className="text-4xl font-light leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
                         Find Your Perfect Home, <span className="font-serif italic text-white">Anywhere</span>.
                     </h1>
+                    <p className="text-lg text-slate-300 md:text-xl">
+                        Discover premium villas, sky-high penthouses, and storied estates from the world&apos;s most thoughtful hosts.
+                    </p>
 
                     {/* Main Action Button */}
                     <div className="mt-8 md:mt-12">

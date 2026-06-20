@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "./components/navbar/Navbar";
+import Link from "next/link";
+import Logo from "./utility/Logo";
+import LoginButton from "./utility/Button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +31,32 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar
+          brand={
+            <Link href="/" className="flex items-center gap-3 rounded-full transition hover:opacity-90">
+              <Logo />
+              <div>
+                <p className="text-lg font-semibold text-white">Estate<span className="text-cyan-400">ly</span></p>
+              </div>
+            </Link>
+          }
+          items={[
+            { label: "Home", href: "/" },
+            { label: "All Properties", href: "/all-properties" },
+            { label: "Pricing", href: "#pricing", isActive: true },
+          ]}
+          rightContent={
+            <>
+              <Link href="/auth/login" className="text-sm font-medium text-slate-200 transition hover:text-white">
+                Login
+              </Link>
+              <LoginButton href="/auth/login" />
+            </>
+          }
+        />
+        {children}
+      </body>
     </html>
   );
 }
