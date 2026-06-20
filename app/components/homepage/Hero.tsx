@@ -7,9 +7,16 @@ import { ArrowRight } from "lucide-react";
 export default function HeroSection() {
     return (
         <section className="relative min-h-screen w-full overflow-hidden bg-gray-900 text-white">
-            
+
             {/* Background Video Layer */}
-            <div className="absolute inset-0 z-0 h-full w-full pointer-events-none overflow-hidden">
+            <div
+                className="absolute inset-0 z-0 h-full w-full pointer-events-none overflow-hidden bg-cover bg-center bg-no-repeat"
+                style={{
+                    // This serves as your poster image while the iframe loads
+                    backgroundImage: `url('https://images.unsplash.com/photo-1602941525421-8f8b81d3edbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+                }}
+
+            >
                 <iframe
                     src="https://player.vimeo.com/video/1203055512?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1&playsinline=1"
                     className="absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
@@ -18,7 +25,7 @@ export default function HeroSection() {
                     allowFullScreen
                     title="Hero Background Video"
                 />
-                
+
                 {/* Subtle dark overlay to keep the white text readable over video scenes */}
                 <div className="absolute inset-0 bg-black/30 md:bg-black/15" />
             </div>
