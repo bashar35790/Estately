@@ -30,8 +30,7 @@ export default function HeroSection() {
                 {/* Main Hero Body */}
                 <div className="my-auto max-w-4xl pt-20 md:pt-0">
                     <h1 className="text-4xl font-light leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-                        A <span className="font-serif italic text-white">trusted</span> real <br className="hidden sm:inline" />
-                        estate partner
+                        Find Your Perfect Home, <span className="font-serif italic text-white">Anywhere</span>.
                     </h1>
 
                     {/* Main Action Button */}
