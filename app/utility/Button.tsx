@@ -16,16 +16,16 @@ export default function LoginButton({ href = "/login" }: LoginButtonProps) {
                 group
                 relative
                 flex
-                h-[51px]
-                w-[131px]
+                h-12.75
+                w-32.75
                 items-center
                 justify-center
                 rounded-[15px]
                 /* Uses your brand's green at 20% opacity */
                 bg-[rgba(30,172,112,0.2)] 
-                bg-gradient-to-br
+                bg-linear-to-br
                 /* Gradient fades from your primary green to transparent */
-                from-[var(--color-primary)]
+                from-primary
                 from-0%
                 to-transparent
                 to-30%
@@ -44,11 +44,11 @@ export default function LoginButton({ href = "/login" }: LoginButtonProps) {
             <div
                 className="
                     flex
-                    h-[47px]
-                    w-[127px]
+                    h-11.75
+                    w-32.75
                     items-center
                     justify-center
-                    gap-[15px]
+                    gap-3.75
                     rounded-[13px]
                     bg-[#1a1a1a]
                     font-semibold

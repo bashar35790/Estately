@@ -51,7 +51,7 @@ export default function RootLayout({
               <Link href="/auth/login" className="text-sm font-medium text-slate-200 transition hover:text-white">
                 Login
               </Link>
-              <LoginButton href="/auth/login" />
+              <LoginButton href="/auth/signup" />
             </>
           }
         />
