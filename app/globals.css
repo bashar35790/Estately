@@ -11,7 +11,7 @@
     --font-body: var(--font-manrope);
 }
 
-body {
+body p span {
     font-family: var(--font-body);
 }
 

@@ -36,9 +36,9 @@ export default function HeroSection() {
                 {/* Main Hero Body */}
                 <div className="my-auto max-w-4xl pt-20 md:pt-0">
                     <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-                        Find Your Perfect Home, <span className="font-bold italic text-white">Anywhere</span>.
+                        Find Your Perfect Home, <span className=" italic text-white">Anywhere</span>.
                     </h1>
-                    <p className="text-lg text-slate-300 md:text-xl">
+                    <p className="text-lg text-slate-300 md:text-xl max-w-2xl mt-6">
                         Discover premium villas, sky-high penthouses, and storied estates from the world&apos;s most thoughtful hosts.
                     </p>
 
