@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/navbar/Navbar";
 import Link from "next/link";
 import Logo from "./utility/Logo";
 import LoginButton from "./utility/Button";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { Playfair_Display, Manrope } from "next/font/google";
+
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  variable: "--font-playfair",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const manrope = Manrope({
   subsets: ["latin"],
+  variable: "--font-manrope",
 });
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`$${playfair.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Navbar
@@ -37,7 +39,7 @@ export default function RootLayout({
             <Link href="/" className="flex items-center gap-3 rounded-full transition hover:opacity-90">
               <Logo />
               <div>
-                <p className="text-lg font-semibold text-white">Estate<span className="text-cyan-400">ly</span></p>
+                <p className="text-lg font-semibold text-white">Estate<span className="text-primary">ly</span></p>
               </div>
             </Link>
           }
