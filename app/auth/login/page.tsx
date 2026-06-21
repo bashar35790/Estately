@@ -2,35 +2,68 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Form, TextField, Button, Input, FieldError, Checkbox } from "@heroui/react";
-import { Mail, Lock, Eye, EyeOff, Check } from "lucide-react";
+import { Form, TextField, Button, Input, FieldError } from "@heroui/react";
+import { Mail, Eye, EyeOff } from "lucide-react";
+import { authClient } from "@/app/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function GlassLoginForm() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const router = useRouter();
 
   // Re-creating the visibility toggle action from your reference image concept
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   // Form Submission handler (adapted from your provided concept)
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
+    setSubmitError("");
+    setIsSubmitting(true);
 
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
-    });
+    try {
+      const formData = new FormData(e.currentTarget);
+      
+      // Extract and validate form fields
+      const email = formData.get("email") as string;
+      const password = formData.get("password") as string;
 
-    alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+      if (!email || !password) {
+        setSubmitError("Please fill in all fields.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      const { data, error } = await authClient.signIn.email({
+        email: email.trim(),
+        password,
+        rememberMe: true,
+      });
+
+      if (error) {
+        setSubmitError(error.message || "Login failed. Please try again.");
+        return;
+      }
+
+      if (data) {
+        router.push("/");
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred.";
+      setSubmitError(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     // FULL-PAGE CONTAINER with Landscape Background
-    <div 
+    <div
       className="relative flex min-h-screen w-full items-center justify-center p-4"
       style={{
         // Replace with your actual background image path
-        backgroundImage: `url('https://images.unsplash.com/photo-1602941525421-8f8b81d3edbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`, 
+        backgroundImage: `url('https://images.unsplash.com/photo-1602941525421-8f8b81d3edbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -40,14 +73,14 @@ export default function GlassLoginForm() {
       <div className="absolute inset-0 z-0 bg-black/10" />
 
       {/* GLASSMORPHISM LOGIN FORM / CARD */}
-      <Form 
+      <Form
         onSubmit={onSubmit}
         className="
           relative
           z-10
           flex
           w-full
-          max-w-[480px]
+          max-w-120
           flex-col
           gap-7
           rounded-[32px]
@@ -60,7 +93,7 @@ export default function GlassLoginForm() {
           sm:w-[90%]
         "
       >
-        
+
         {/* Header Text Section */}
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -73,7 +106,7 @@ export default function GlassLoginForm() {
 
         {/* --- FORM FIELDS --- */}
         <div className="flex flex-col gap-5">
-          
+
           {/* Email Input Field (styled to look like "User Name" in image) */}
           <TextField
             isRequired
@@ -88,8 +121,8 @@ export default function GlassLoginForm() {
             }}
           >
             <div className="relative">
-              <Input 
-                placeholder="Email Address" 
+              <Input
+                placeholder="Email Address"
                 aria-label="Email Address"
                 className="
                   glass-input
@@ -129,8 +162,8 @@ export default function GlassLoginForm() {
             }}
           >
             <div className="relative">
-              <Input 
-                placeholder="Password" 
+              <Input
+                placeholder="Password"
                 aria-label="Password"
                 className="
                   glass-input
@@ -166,12 +199,16 @@ export default function GlassLoginForm() {
 
         {/* --- FORM ACTIONS --- */}
         <div className="flex flex-col gap-6">
-          
-
+          {submitError && (
+            <div className="rounded-3xl border border-rose-400/50 bg-rose-500/10 px-4 py-3 text-sm text-rose-300 backdrop-blur-sm">
+              {submitError}
+            </div>
+          )}
 
           {/* Main Login Submit Button (using the design gradient) */}
-          <Button 
+          <Button
             type="submit"
+            isDisabled={isSubmitting}
             className="
               w-full
               rounded-[15px]
@@ -183,25 +220,22 @@ export default function GlassLoginForm() {
               shadow-lg
               transition-opacity
               hover:opacity-90
+              disabled:opacity-50
             "
             size="lg"
           >
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </Button>
 
           {/* Footer Navigation Link */}
           <div className="text-center text-base text-white/90">
             Dont have an account?{" "}
-            <Link href="/register" className="font-semibold text-white hover:underline">
+            <Link href="/auth/signup" className="font-semibold text-white hover:underline">
               Signup
             </Link>
           </div>
         </div>
 
-        {/* Designer Attribution (matching image) */}
-        <div className="mt-8 text-center text-sm text-white/60">
-          Created by <span className="font-semibold italic text-white/80">Abul Bashar</span>
-        </div>
       </Form>
     </div>
   );
