@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Form, TextField, Button, Input, FieldError } from "@heroui/react";
 import { User, Mail, Eye, EyeOff, ImageIcon, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/app/lib/auth-client";
+import { toast } from "react-toastify";
 
 // 1. Define Type Interfaces based on your ImgBB response schema
 interface ImgBBResponse {
@@ -28,11 +31,21 @@ interface ImgBBResponse {
   status: number;
 }
 
+interface SignupFormData {
+  name: string;
+  email: string;
+  confirmPassword: string;
+  photo: string; // This will hold the ImgBB URL
+}
+
 export default function GlassSignupForm() {
+  const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [passwordValue, setPasswordValue] = useState("");
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
   // Photo Upload States
   const [photoUrl, setPhotoUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -49,7 +62,7 @@ export default function GlassSignupForm() {
     setIsUploading(true);
     setUploadError("");
 
-    const IMGBB_API_KEY = "e3b2227b4908f94c323f9f643fe2b837"; 
+    const IMGBB_API_KEY = "e3b2227b4908f94c323f9f643fe2b837";
     const formData = new FormData();
     formData.append("image", file);
 
@@ -66,37 +79,81 @@ export default function GlassSignupForm() {
       } else {
         setUploadError("Upload failed. Please try again.");
       }
-    } catch (error) {
+    } catch {
       setUploadError("Network error during upload.");
-    } 
+    }
     finally {
       setIsUploading(false);
     }
   };
 
   // --- Form Submission handler ---
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
+    setSubmitError("");
 
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
-    });
-
+    // Validate photo upload
     if (!photoUrl) {
       setUploadError("A profile photo is required.");
       return;
     }
 
-    
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+
+      // Extract form fields with proper type checking
+      const name = formData.get("name") as string;
+      const email = formData.get("email") as string;
+      const confirmPassword = formData.get("confirmPassword") as string;
+
+      // Validate all required fields are present
+      if (!name || !email || !confirmPassword) {
+        setSubmitError("Please fill in all required fields.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Create properly typed form data
+      const signupData: SignupFormData = {
+        name: name.trim(),
+        email: email.trim(),
+        confirmPassword,
+        photo: photoUrl,
+      };
+
+      // Call authentication API
+      const { data, error } = await authClient.signUp.email({
+        name: signupData.name,
+        email: signupData.email,
+        password: signupData.confirmPassword,
+        image: signupData.photo,
+      });
+      toast.success("Signup successful! Please check your email to verify your account.");
+
+      if (error) {
+        toast.error(`Signup failed: ${error.message}`);
+        return;
+      }
+
+      if (data) {
+        // Redirect to login or dashboard on success
+        router.push("/auth/login");
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred.";
+      setSubmitError(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div 
+    <div
       className="relative flex min-h-screen w-full items-center justify-center p-4 py-12 md:py-6"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`, 
+        backgroundImage: `url('https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -105,7 +162,7 @@ export default function GlassSignupForm() {
       <div className="absolute inset-0 z-0 bg-black/10" />
 
       {/* GLASSMORPHISM CARD */}
-      <Form 
+      <Form
         onSubmit={onSubmit}
         className="relative z-10 flex w-full max-w-120 flex-col gap-5 rounded-[32px] border border-white/20 bg-white/10 p-8 md:p-10 shadow-2xl backdrop-blur-[15px] sm:w-[90%]"
       >
@@ -125,7 +182,7 @@ export default function GlassSignupForm() {
             </div>
             <FieldError className="mt-1 px-2 text-sm text-rose-300" />
           </TextField>
-          
+
           {/* Email Input */}
           <TextField isRequired name="email" type="email" validate={v => !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ? "Invalid email" : null}>
             <div className="relative">
@@ -139,16 +196,16 @@ export default function GlassSignupForm() {
           <div className="flex flex-col gap-1">
             {/* Hidden field so the link automatically appends to your HeroUI form data */}
             <input type="hidden" name="photo" value={photoUrl} />
-            
+
             <label className="relative flex w-full cursor-pointer items-center justify-between rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg font-medium text-white/60 transition-all hover:border-white/50">
               <span className="truncate max-w-70">
                 {photoUrl ? "✓ Photo Uploaded!" : isUploading ? "Uploading to ImgBB..." : "Upload Profile Photo"}
               </span>
-              <input 
-                type="file" 
-                accept="image/*" 
-                onChange={handlePhotoUpload} 
-                className="hidden" 
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoUpload}
+                className="hidden"
                 disabled={isUploading}
                 aria-label="Upload Profile Photo"
               />
@@ -188,8 +245,19 @@ export default function GlassSignupForm() {
 
         {/* --- FORM ACTIONS --- */}
         <div className="flex flex-col gap-4 mt-2">
-          <Button type="submit" isDisabled={isUploading} className="w-full rounded-[15px] bg-linear-to-r from-[#A3CF16] to-primary py-5 text-xl font-semibold text-black shadow-lg transition-opacity hover:opacity-90 disabled:opacity-50" size="lg">
-            Create Account
+          {submitError && (
+            <div className="rounded-3xl border border-rose-400/50 bg-rose-500/10 px-4 py-3 text-sm text-rose-300 backdrop-blur-sm">
+              {submitError}
+            </div>
+          )}
+
+          <Button
+            type="submit"
+            isDisabled={isUploading || isSubmitting}
+            className="w-full rounded-[15px] bg-linear-to-r from-[#A3CF16] to-primary py-5 text-xl font-semibold text-black shadow-lg transition-opacity hover:opacity-90 disabled:opacity-50"
+            size="lg"
+          >
+            {isSubmitting ? "Creating Account..." : "Create Account"}
           </Button>
 
           <div className="text-center text-base text-white/90">
