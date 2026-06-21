@@ -3,11 +3,11 @@
 import { useState, ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "@/app/lib/utils";
+import { usePathname } from "next/navigation";
 
 interface NavbarItem {
   label: string;
   href: string;
-  isActive?: boolean;
 }
 
 interface NavbarProps {
@@ -37,6 +37,7 @@ export function Navbar({
   position = "sticky",
 }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <nav
@@ -94,9 +95,9 @@ export function Navbar({
                 href={item.href}
                 className={cn(
                   "text-sm font-medium transition hover:text-white",
-                  item.isActive ? "text-primary border-b-2 border-secondary pb-1" : "text-slate-300"
+                  pathname === item.href ? "text-primary border-b-2 border-secondary pb-1" : "text-slate-300"
                 )}
-                aria-current={item.isActive ? "page" : undefined}
+                aria-current={pathname === item.href ? "page" : undefined}
               >
                 {item.label}
               </Link>
@@ -116,7 +117,7 @@ export function Navbar({
                   href={item.href}
                   className={cn(
                     "block rounded-xl px-3 py-2 text-sm transition hover:bg-slate-900 hover:text-white",
-                    item.isActive ? "bg-slate-900 text-white" : "text-slate-300"
+                    pathname === item.href ? "bg-slate-900 text-white" : "text-slate-300"
                   )}
                 >
                   {item.label}
