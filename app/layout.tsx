@@ -6,6 +6,7 @@ import Logo from "./utility/Logo";
 import LoginButton from "./utility/Button";
 
 import { Playfair_Display, Manrope } from "next/font/google";
+import { ToastContainer } from "react-toastify/unstyled";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -48,7 +49,7 @@ export default function RootLayout({
           items={[
             { label: "Home", href: "/" },
             { label: "All Properties", href: "/all-properties" },
-            { label: "Dashboard", href: "/dashboard"},
+            { label: "Dashboard", href: "/dashboard" },
           ]}
           rightContent={
             <>
@@ -59,7 +60,10 @@ export default function RootLayout({
             </>
           }
         />
-        {children}
+        <main>
+          {children}
+        </main>
+        <ToastContainer />
       </body>
     </html>
   );

@@ -89,7 +89,7 @@ export default function GlassSignupForm() {
       return;
     }
 
-    alert(`Account registration submitted!\n\nPayload:\n${JSON.stringify(data, null, 2)}`);
+    
   };
 
   return (
