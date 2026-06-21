@@ -26,7 +26,7 @@ export default function GlassLoginForm() {
 
   return (
     // FULL-PAGE CONTAINER with Landscape Background
-    <main 
+    <div 
       className="relative flex min-h-screen w-full items-center justify-center p-4"
       style={{
         // Replace with your actual background image path
@@ -90,6 +90,7 @@ export default function GlassLoginForm() {
             <div className="relative">
               <Input 
                 placeholder="Email Address" 
+                aria-label="Email Address"
                 className="
                   glass-input
                   w-full
@@ -130,6 +131,7 @@ export default function GlassLoginForm() {
             <div className="relative">
               <Input 
                 placeholder="Password" 
+                aria-label="Password"
                 className="
                   glass-input
                   w-full
@@ -165,20 +167,7 @@ export default function GlassLoginForm() {
         {/* --- FORM ACTIONS --- */}
         <div className="flex flex-col gap-6">
           
-          {/* Remember me Checkbox */}
-          <Checkbox 
-            defaultSelected
-            className="text-white/90"
-            radius="sm"
-            color="success"
-            classNames={{
-              wrapper: "border border-white/40",
-              label: "text-white text-base",
-              icon: "text-white"
-            }}
-          >
-            Remember me
-          </Checkbox>
+
 
           {/* Main Login Submit Button (using the design gradient) */}
           <Button 
@@ -214,6 +203,6 @@ export default function GlassLoginForm() {
           Created by <span className="font-semibold italic text-white/80">Abul Bashar</span>
         </div>
       </Form>
-    </main>
+    </div>
   );
 }

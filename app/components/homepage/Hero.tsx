@@ -38,7 +38,7 @@ export default function HeroSection() {
                     <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
                         Find Your Perfect Home, <span className=" italic text-white">Anywhere</span>.
                     </h1>
-                    <p className="text-lg text-slate-300 md:text-xl max-w-2xl mt-6">
+                    <p className="text-lg text-slate-50 md:text-xl max-w-2xl mt-6">
                         Discover premium villas, sky-high penthouses, and storied estates from the world&apos;s most thoughtful hosts.
                     </p>
 

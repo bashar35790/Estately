@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Form, TextField, Button, Input, FieldError, Checkbox } from "@heroui/react";
-import { User, Mail, Lock, Eye, EyeOff, Image as ImageIcon, Loader2 } from "lucide-react";
+import { Form, TextField, Button, Input, FieldError } from "@heroui/react";
+import { User, Mail, Eye, EyeOff, ImageIcon, Loader2 } from "lucide-react";
+import Image from "next/image";
 
 // 1. Define Type Interfaces based on your ImgBB response schema
 interface ImgBBResponse {
@@ -48,7 +49,6 @@ export default function GlassSignupForm() {
     setIsUploading(true);
     setUploadError("");
 
-    // !!! WARNING: Replace with your actual ImgBB API Key !!!
     const IMGBB_API_KEY = "e3b2227b4908f94c323f9f643fe2b837"; 
     const formData = new FormData();
     formData.append("image", file);
@@ -93,7 +93,7 @@ export default function GlassSignupForm() {
   };
 
   return (
-    <main 
+    <div 
       className="relative flex min-h-screen w-full items-center justify-center p-4 py-12 md:py-6"
       style={{
         backgroundImage: `url('https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`, 
@@ -107,7 +107,7 @@ export default function GlassSignupForm() {
       {/* GLASSMORPHISM CARD */}
       <Form 
         onSubmit={onSubmit}
-        className="relative z-10 flex w-full max-w-[480px] flex-col gap-5 rounded-[32px] border border-white/20 bg-white/10 p-8 md:p-10 shadow-2xl backdrop-blur-[15px] sm:w-[90%]"
+        className="relative z-10 flex w-full max-w-120 flex-col gap-5 rounded-[32px] border border-white/20 bg-white/10 p-8 md:p-10 shadow-2xl backdrop-blur-[15px] sm:w-[90%]"
       >
         <div className="flex flex-col gap-1">
           <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Sign Up</h1>
@@ -120,7 +120,7 @@ export default function GlassSignupForm() {
           {/* Full Name Input */}
           <TextField isRequired name="name" type="text" validate={v => v.trim().length < 2 ? "Enter your name" : null}>
             <div className="relative">
-              <Input placeholder="Full Name" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
+              <Input placeholder="Full Name" aria-label="Full Name" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
               <User className="absolute right-5 top-1/2 h-6 w-6 -translate-y-1/2 text-white/60" />
             </div>
             <FieldError className="mt-1 px-2 text-sm text-rose-300" />
@@ -129,7 +129,7 @@ export default function GlassSignupForm() {
           {/* Email Input */}
           <TextField isRequired name="email" type="email" validate={v => !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ? "Invalid email" : null}>
             <div className="relative">
-              <Input placeholder="Email Address" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
+              <Input placeholder="Email Address" aria-label="Email Address" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
               <Mail className="absolute right-5 top-1/2 h-6 w-6 -translate-y-1/2 text-white/60" />
             </div>
             <FieldError className="mt-1 px-2 text-sm text-rose-300" />
@@ -141,7 +141,7 @@ export default function GlassSignupForm() {
             <input type="hidden" name="photo" value={photoUrl} />
             
             <label className="relative flex w-full cursor-pointer items-center justify-between rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg font-medium text-white/60 transition-all hover:border-white/50">
-              <span className="truncate max-w-[280px]">
+              <span className="truncate max-w-70">
                 {photoUrl ? "✓ Photo Uploaded!" : isUploading ? "Uploading to ImgBB..." : "Upload Profile Photo"}
               </span>
               <input 
@@ -150,11 +150,12 @@ export default function GlassSignupForm() {
                 onChange={handlePhotoUpload} 
                 className="hidden" 
                 disabled={isUploading}
+                aria-label="Upload Profile Photo"
               />
               {isUploading ? (
                 <Loader2 className="h-6 w-6 animate-spin text-white" />
               ) : photoUrl ? (
-                <img src={photoUrl} alt="Preview" className="h-7 w-7 rounded-full object-cover border border-white" />
+                <Image src={photoUrl} alt="Preview" className="h-7 w-7 rounded-full object-cover border border-white" width={28} height={28} />
               ) : (
                 <ImageIcon className="h-6 w-6 text-white/60" />
               )}
@@ -165,7 +166,7 @@ export default function GlassSignupForm() {
           {/* Password Input */}
           <TextField isRequired name="password" type={isPasswordVisible ? "text" : "password"} minLength={8} onChange={v => setPasswordValue(v)} validate={v => v.length < 8 ? "Must be 8+ characters" : null}>
             <div className="relative">
-              <Input placeholder="Password" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
+              <Input placeholder="Password" aria-label="Password" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
               <button type="button" onClick={togglePasswordVisibility} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/60 hover:text-white focus:outline-none">
                 {isPasswordVisible ? <EyeOff className="h-6 w-6" /> : <Eye className="h-6 w-6" />}
               </button>
@@ -176,7 +177,7 @@ export default function GlassSignupForm() {
           {/* Confirm Password Input */}
           <TextField isRequired name="confirmPassword" type={isConfirmVisible ? "text" : "password"} validate={v => v !== passwordValue ? "Passwords do not match" : null}>
             <div className="relative">
-              <Input placeholder="Confirm Password" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
+              <Input placeholder="Confirm Password" aria-label="Confirm Password" className="glass-input w-full rounded-[15px] border border-white/30 bg-transparent px-5 py-4 text-lg text-white placeholder:text-white/60 focus:border-white/60 focus:outline-none" />
               <button type="button" onClick={toggleConfirmVisibility} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/60 hover:text-white focus:outline-none">
                 {isConfirmVisible ? <EyeOff className="h-6 w-6" /> : <Eye className="h-6 w-6" />}
               </button>
@@ -187,20 +188,16 @@ export default function GlassSignupForm() {
 
         {/* --- FORM ACTIONS --- */}
         <div className="flex flex-col gap-4 mt-2">
-          <Checkbox isRequired className="text-white/90" radius="sm" color="success" classNames={{ wrapper: "border border-white/40", label: "text-white text-sm sm:text-base", icon: "text-white" }}>
-            I agree to the Terms & Conditions
-          </Checkbox>
-
-          <Button type="submit" isDisabled={isUploading} className="w-full rounded-[15px] bg-gradient-to-r from-[#A3CF16] to-[#1EAC70] py-5 text-xl font-semibold text-black shadow-lg transition-opacity hover:opacity-90 disabled:opacity-50" size="lg">
+          <Button type="submit" isDisabled={isUploading} className="w-full rounded-[15px] bg-linear-to-r from-[#A3CF16] to-primary py-5 text-xl font-semibold text-black shadow-lg transition-opacity hover:opacity-90 disabled:opacity-50" size="lg">
             Create Account
           </Button>
 
           <div className="text-center text-base text-white/90">
             Already have an account?{" "}
-            <Link href="/login" className="font-semibold text-white hover:underline">Login</Link>
+            <Link href="/auth/login" className="font-semibold text-white hover:underline">Login</Link>
           </div>
         </div>
       </Form>
-    </main>
+    </div>
   );
 }
