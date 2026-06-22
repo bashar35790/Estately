@@ -19,6 +19,7 @@ const manrope = Manrope({
 });
 
 
+
 export const metadata: Metadata = {
   title: "Estately | Find, Book & Manage Rental Properties Online",
   description: "Discover, book, and manage rental properties with RentNest. Browse verified listings, save favorites, make secure payments, and connect with trusted property owners through a seamless rental experience.",
