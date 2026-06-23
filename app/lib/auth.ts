@@ -17,15 +17,17 @@ export const auth = betterAuth({
   },
   user: {
     additionalFields: {
-      role: {
+      userRole: {
         type: "string",
         required: true,
         defaultValue: "tenant",
+        input: true,
       },
       plan: {
         type: "string",
         required: true,
         defaultValue: "free",
+        input: true,
       },
     },
   },

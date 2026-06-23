@@ -214,7 +214,7 @@ export default function SignupForm() {
         email: email.trim(),
         password,
         image: photoUrl,
-        role: role,
+        userRole: role,
         plan: "free",
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);

@@ -5,7 +5,7 @@ export const authClient = createAuthClient({
   baseURL: process.env.BETTER_AUTH_URL,
   user: {
     additionalFields: {
-      role: {
+      userRole: {
         type: "string",
       },
       plan: {
