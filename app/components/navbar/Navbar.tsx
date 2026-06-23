@@ -39,11 +39,14 @@ export function Navbar({
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  if (pathname.includes("dashboard")) {
+    return null;
+  }
 
   // Better Auth Session Hook
-  const { 
-    data: session, 
-    isPending, 
+  const {
+    data: session,
+    isPending,
   } = authClient.useSession();
 
   /**
@@ -92,7 +95,7 @@ export function Navbar({
               )}
             </svg>
           </button>
-          
+
           <div className="flex items-center gap-3">{brand}</div>
         </div>
 
@@ -119,12 +122,12 @@ export function Navbar({
             <div className="h-9 w-9 animate-pulse rounded-full bg-white/10" />
           ) : session ? (
             /* User Profile Avatar with Dropdown */
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setIsProfileOpen(true)}
               onMouseLeave={() => setIsProfileOpen(false)}
             >
-              <button 
+              <button
                 className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-[#A3CF16]/30 transition-all hover:border-[#A3CF16] focus:outline-none focus:ring-2 focus:ring-[#A3CF16]/40"
                 aria-label="User profile"
               >
@@ -143,45 +146,45 @@ export function Navbar({
                   <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-2xl backdrop-blur-xl">
                     {/* User Profile Summary */}
                     <div className="px-4 py-3 bg-white/3 border-b border-white/5">
-                        <p className="text-sm font-bold text-white truncate">{session.user.name}</p>
-                        <p className="text-[11px] text-[#A3CF16] font-medium uppercase tracking-wider mb-1">
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {(session.user as any).userRole || "Member"}
-                        </p>
-                        <p className="text-xs text-white/40 truncate">{session.user.email}</p>
+                      <p className="text-sm font-bold text-white truncate">{session.user.name}</p>
+                      <p className="text-[11px] text-[#A3CF16] font-medium uppercase tracking-wider mb-1">
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                        {(session.user as any).userRole || "Member"}
+                      </p>
+                      <p className="text-xs text-white/40 truncate">{session.user.email}</p>
                     </div>
-                    
+
                     {/* Menu Actions */}
                     <div className="p-1.5 flex flex-col gap-0.5">
-                      <Link 
-                        href="/dashboard" 
+                      <Link
+                        href="/dashboard"
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-slate-300 transition hover:bg-white/5 hover:text-[#A3CF16]"
                         onClick={() => setIsProfileOpen(false)}
                       >
-                          <LayoutDashboard size={15} className="opacity-70" /> Dashboard
+                        <LayoutDashboard size={15} className="opacity-70" /> Dashboard
                       </Link>
-                      <Link 
-                        href="/profile" 
+                      <Link
+                        href="/profile"
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-slate-300 transition hover:bg-white/5 hover:text-[#A3CF16]"
                         onClick={() => setIsProfileOpen(false)}
                       >
-                          <User size={15} className="opacity-70" /> Profile Details
+                        <User size={15} className="opacity-70" /> Profile Details
                       </Link>
-                      <Link 
-                        href="/settings" 
+                      <Link
+                        href="/settings"
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-slate-300 transition hover:bg-white/5 hover:text-[#A3CF16]"
                         onClick={() => setIsProfileOpen(false)}
                       >
-                          <Settings size={15} className="opacity-70" /> Account Settings
+                        <Settings size={15} className="opacity-70" /> Account Settings
                       </Link>
-                      
+
                       <div className="my-1 h-px bg-white/5" />
-                      
-                      <button 
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-rose-400 transition hover:bg-rose-500/10"
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-rose-400 transition hover:bg-rose-500/10"
                       >
-                          <LogOut size={15} className="opacity-80" /> Sign Out
+                        <LogOut size={15} className="opacity-80" /> Sign Out
                       </button>
                     </div>
                   </div>
@@ -216,18 +219,18 @@ export function Navbar({
               </li>
             ))}
           </ul>
-          
+
           <div className="mt-6 pt-6 border-t border-white/5">
             {!session && rightContent && (
               <div className="flex flex-col gap-4">{rightContent}</div>
             )}
             {session && (
-               <button 
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/20"
-               >
-                  <LogOut size={16} /> Logout
-               </button>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/20"
+              >
+                <LogOut size={16} /> Logout
+              </button>
             )}
           </div>
         </div>
