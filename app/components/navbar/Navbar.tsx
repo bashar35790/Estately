@@ -35,19 +35,21 @@ export function Navbar({
   className,
   position = "sticky",
 }: NavbarProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
-  if (pathname.includes("dashboard")) {
-    return null;
-  }
-
   // Better Auth Session Hook
   const {
     data: session,
     isPending,
   } = authClient.useSession();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  if (pathname.includes("dashboard")) {
+    return null;
+  }
+
 
   /**
    * Handle Logout process

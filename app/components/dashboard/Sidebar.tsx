@@ -88,7 +88,7 @@ export function DashboardSidebar() {
                 <Link href="/" className="flex items-center gap-3 transition hover:opacity-80">
                     <Logo />
                     <span className="text-2xl font-bold tracking-tight text-white">
-                        Estate<span className="text-[#A3CF16]">ly</span>
+                        Estate<span className="text-secondary">ly</span>
                     </span>
                 </Link>
             </div>
@@ -108,20 +108,20 @@ export function DashboardSidebar() {
                             className={cn(
                                 "group relative flex items-center gap-4 rounded-2xl px-4 py-3.5 text-[13.5px] font-semibold transition-all duration-300",
                                 isActive
-                                    ? "bg-[#A3CF16]/10 text-[#A3CF16] border border-[#A3CF16]/20 shadow-[0_0_20px_rgba(163,207,22,0.05)]"
+                                    ? "bg-secondary/10 text-secondary border border-secondary/20 shadow-[0_0_20px_rgba(163,207,22,0.05)]"
                                     : "text-white/40 hover:bg-white/5 hover:text-white border border-transparent"
                             )}
                         >
                             <Icon size={18} className={cn(
                                 "transition-colors duration-300",
-                                isActive ? "text-[#A3CF16]" : "text-white/20 group-hover:text-white"
+                                isActive ? "text-secondary" : "text-white/20 group-hover:text-white"
                             )} />
                             <span className="flex-1">{item.label}</span>
-                            {isActive && <ChevronRight size={14} className="text-[#A3CF16] animate-pulse" />}
+                            {isActive && <ChevronRight size={14} className="text-secondary animate-pulse" />}
 
                             {/* Subtle active glow */}
                             {isActive && (
-                                <div className="absolute inset-0 rounded-2xl blur-[10px] bg-[#A3CF16]/10 -z-10" />
+                                <div className="absolute inset-0 rounded-2xl blur-[10px] bg-secondary/10 -z-10" />
                             )}
                         </Link>
                     );
@@ -133,7 +133,7 @@ export function DashboardSidebar() {
                 <div className="p-6 mt-auto border-t border-white/5">
                     <div className="flex items-center gap-4 px-3 py-4 rounded-[22px] bg-white/[0.03] border border-white/5 transition-all hover:bg-white/[0.05]">
                         <div className="relative h-11 w-11 shrink-0">
-                            <div className="absolute inset-0 rounded-full bg-[#A3CF16] blur-[2px] opacity-20" />
+                            <div className="absolute inset-0 rounded-full bg-secondary blur-[2px] opacity-20" />
                             <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white/10">
                                 <Image
                                     src={session.user.image || "https://api.dicebear.com/7.x/avataaars/svg?seed=Lucky"}
@@ -148,7 +148,7 @@ export function DashboardSidebar() {
                             <p className="text-sm font-bold text-white truncate leading-none mb-1">
                                 {session.user.name}
                             </p>
-                            <p className="text-[10px] text-[#A3CF16] font-extrabold uppercase tracking-widest">
+                            <p className="text-[10px] text-secondary font-extrabold uppercase tracking-widest">
                                 {userRole}
                             </p>
                         </div>
@@ -168,22 +168,23 @@ export function DashboardSidebar() {
             {/* Mobile Drawer trigger and content */}
             <div className="lg:hidden">
                 <Drawer>
-                    <Drawer.Trigger>
-                        <div className="fixed top-24 left-6 z-40">
-                            <Button
-                                variant="ghost"
-                                className="bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl p-0 h-12 w-12 flex items-center justify-center min-w-0 text-white hover:scale-105 active:scale-95"
-                            >
-                                <LayoutSideContentLeft className="size-5" />
-                            </Button>
-                        </div>
-                    </Drawer.Trigger>
-                    <Drawer.Backdrop />
-                    <Drawer.Content placement="left" className="w-72 bg-transparent border-none">
-                        <Drawer.Dialog className="h-full bg-transparent p-0 outline-none">
-                            <NavContent />
-                        </Drawer.Dialog>
-                    </Drawer.Content>
+                    <Button className="lg:hidden" variant="secondary">
+                        <LayoutSideContentLeft />
+                        Sidebar
+                    </Button>
+                    <Drawer.Backdrop>
+                        <Drawer.Content placement="left">
+                            <Drawer.Dialog>
+                                <Drawer.CloseTrigger />
+                                <Drawer.Header>
+                                    <Drawer.Heading>Navigation</Drawer.Heading>
+                                </Drawer.Header>
+                                <Drawer.Body>
+                                    <NavContent />
+                                </Drawer.Body>
+                            </Drawer.Dialog>
+                        </Drawer.Content>
+                    </Drawer.Backdrop>
                 </Drawer>
             </div>
         </>
