@@ -42,8 +42,8 @@ export function DashboardSidebar() {
     const ownerNavLinks = [
         { icon: House, href: "/dashboard/owner", label: "Overview" },
         { icon: MapPin, href: "/dashboard/owner/properties", label: "My Properties" },
-        { icon: PlusCircle, href: "/dashboard/owner/properties/new", label: "Post Property" },
-        { icon: Building, href: "/dashboard/owner/company", label: "Company Profile" },
+        { icon: PlusCircle, href: "/dashboard/owner/properties/new", label: "Add Property" },
+        { icon: Building, href: "/dashboard/owner/company", label: "Booking Requests" },
         { icon: Mail, href: "/messages", label: "Inquiries" },
         { icon: User, href: "/profile", label: "Profile" },
         { icon: Settings, href: "/settings", label: "Account Settings" },
