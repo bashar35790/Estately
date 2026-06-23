@@ -50,7 +50,6 @@ export default function RootLayout({
           items={[
             { label: "Home", href: "/" },
             { label: "All Properties", href: "/all-properties" },
-            { label: "Dashboard", href: "/dashboard" },
           ]}
           rightContent={
             <>
