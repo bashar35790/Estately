@@ -63,7 +63,7 @@ export default function ClientReviews() {
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white mb-6">
             Hear from our community
           </h2>
-          <p className="text-zinc-600 dark:text-white/55 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-zinc-600 dark:text-white/55 max-w-xl mx-auto text-lg leading-relaxed">
             Discover why thousands of homeowners and tenants trust Estately for their real estate journey.
           </p>
         </div>
@@ -74,16 +74,16 @@ export default function ClientReviews() {
             <div
               key={review.id}
               className="
-                relative group flex flex-col
-                rounded-[28px] border border-zinc-200/60 dark:border-white/[0.18]
-                bg-white/70 dark:bg-white/[0.09] p-8 sm:p-10
+                relative w-full group flex flex-col
+                rounded-[28px] border border-zinc-200/60 dark:border-white/18
+                bg-white/70 dark:bg-white/9 p-8 sm:p-10
                 shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48px_rgba(0,0,0,0.35)]
                 backdrop-blur-[22px]
                 transition-all duration-500 hover:translate-y-[-8px] hover:border-[#A3CF16]/30 dark:hover:border-[#A3CF16]/30
               "
             >
               {/* Quote Icon Background */}
-              <div className="absolute top-8 right-10 text-zinc-100 dark:text-white/[0.03] group-hover:text-[#A3CF16]/10 transition-colors duration-500">
+              <div className="absolute top-8 right-10 text-zinc-100 dark:text-white/3 group-hover:text-[#A3CF16]/10 transition-colors duration-500">
                 <Quote size={80} fill="currentColor" strokeWidth={0} />
               </div>
 

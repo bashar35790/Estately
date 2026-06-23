@@ -8,7 +8,7 @@ import { User, Mail, Eye, EyeOff, ImageIcon, Loader2, Search, Users, Check } fro
 import { authClient } from "@/app/lib/auth-client";
 import { toast } from "react-toastify";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types 
 
 interface ImgBBResponse {
   data: {
@@ -27,9 +27,9 @@ interface PasswordStrength {
   label: string;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers 
 
-const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY ?? "e3b2227b4908f94c323f9f643fe2b837";
+const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
 function getPasswordStrength(password: string): PasswordStrength {
   if (!password) return { score: 0, label: "" };
@@ -62,7 +62,7 @@ function validateEmail(email: string) {
   return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+//  Sub-components 
 
 interface FieldWrapperProps {
   label: string;
@@ -119,7 +119,7 @@ function GlassInput({ icon, rightElement, className, ...props }: GlassInputProps
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+//  Main Component 
 
 export default function SignupForm() {
   const router = useRouter();
@@ -150,7 +150,7 @@ export default function SignupForm() {
 
   const strength = getPasswordStrength(password);
 
-  // ── Validation ──────────────────────────────────────────────────────────────
+  //  Validation 
 
   const validate = useCallback(() => {
     const next: typeof errors = {};
@@ -214,9 +214,10 @@ export default function SignupForm() {
         email: email.trim(),
         password,
         image: photoUrl,
-        // Wrap your custom schema fields inside additionalFields
-
-      });
+        role: role,
+        plan: "free",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       if (error) {
         setErrors((prev) => ({ ...prev, form: error.message ?? "Signup failed." }));

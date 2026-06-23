@@ -7,7 +7,6 @@ import { ArrowRight } from "lucide-react";
 export default function HeroSection() {
     return (
         <section className="relative min-h-screen w-full overflow-hidden bg-gray-900 text-white">
-
             {/* Background Video Layer */}
             <div
                 className="absolute inset-0 z-0 h-full w-full pointer-events-none overflow-hidden bg-cover bg-center bg-no-repeat"
