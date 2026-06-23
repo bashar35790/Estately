@@ -2,9 +2,9 @@
 
 import { useState, ReactNode } from "react";
 import Link from "next/link";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import { User, Settings, LogOut, LayoutDashboard } from "lucide-react";
 

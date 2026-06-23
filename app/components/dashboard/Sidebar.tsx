@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/app/lib/utils";
-import { authClient } from "@/app/lib/auth-client";
+import { cn } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import {
     House,
