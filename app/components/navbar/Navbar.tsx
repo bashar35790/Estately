@@ -151,7 +151,7 @@ export function Navbar({
                       <p className="text-sm font-bold text-white truncate">{session.user.name}</p>
                       <p className="text-[11px] text-[#A3CF16] font-medium uppercase tracking-wider mb-1">
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                        {(session.user as any).userRole || "Member"}
+                        {(session.user as any).userRole || "Tenant"}
                       </p>
                       <p className="text-xs text-white/40 truncate">{session.user.email}</p>
                     </div>
@@ -159,7 +159,7 @@ export function Navbar({
                     {/* Menu Actions */}
                     <div className="p-1.5 flex flex-col gap-0.5">
                       <Link
-                        href="/dashboard"
+                        href={`/dashboard/${(session.user as any).userRole}`}
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-slate-300 transition hover:bg-white/5 hover:text-[#A3CF16]"
                         onClick={() => setIsProfileOpen(false)}
                       >
