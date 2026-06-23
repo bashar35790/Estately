@@ -27,16 +27,16 @@ export default function HeroSection() {
                 />
 
                 {/* Subtle dark overlay to keep the white text readable over video scenes */}
-                <div className="absolute inset-0 bg-black/30 md:bg-black/15" />
+                <div className="absolute inset-0 bg-black/50 z-10" />
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 flex min-h-screen flex-col justify-between px-6 py-6 md:px-12 md:py-8 lg:px-20">
+            <div className="relative z-10 flex min-h-screen flex-col justify-between container mx-auto px-4">
 
                 {/* Main Hero Body */}
                 <div className="my-auto max-w-4xl pt-20 md:pt-0">
                     <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-                        Find Your Perfect Home, <span className=" italic text-white">Anywhere</span>.
+                        Find Your Perfect Home, <span className=" italic text-primary text-shadow-2xl">Anywhere .</span>
                     </h1>
                     <p className="text-lg text-slate-50 md:text-xl max-w-2xl mt-6">
                         Discover premium villas, sky-high penthouses, and storied estates from the world&apos;s most thoughtful hosts.
@@ -44,14 +44,14 @@ export default function HeroSection() {
 
                     {/* Main Action Button */}
                     <div className="mt-8 md:mt-12">
+                        <Link href="/properties">
                         <Button
-                            as={Link}
-                            href="/properties"
                             size="lg"
                             className="bg-white text-black font-medium rounded-full shadow-lg hover:bg-gray-100 px-6 py-6 text-sm md:text-base inline-flex items-center gap-2"
                         >
                             Available Properties <ArrowRight className="h-4 w-4 text-black" />
                         </Button>
+                        </Link>
                     </div>
                 </div>
 

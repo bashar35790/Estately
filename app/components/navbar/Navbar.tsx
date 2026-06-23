@@ -15,25 +15,14 @@ interface NavbarProps {
   items: NavbarItem[];
   rightContent?: ReactNode;
   className?: string;
-  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   position?: "static" | "sticky" | "fixed";
 }
-
-const maxWidthClasses = {
-  sm: "max-w-[640px]",
-  md: "max-w-[768px]",
-  lg: "max-w-[1280px]",
-  xl: "max-w-[1280px]",
-  "2xl": "max-w-[1536px]",
-  full: "max-w-full",
-};
 
 export function Navbar({
   brand,
   items,
   rightContent,
   className,
-  maxWidth = "lg",
   position = "sticky",
 }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,9 +40,7 @@ export function Navbar({
     >
       <header
         className={cn(
-          "flex items-center justify-between gap-4 px-4 py-3",
-          maxWidth !== "full" && maxWidthClasses[maxWidth],
-          "mx-auto"
+          "flex items-center justify-between gap-4 px-4 py-3 container mx-auto",
         )}
       >
         <div className="flex items-center gap-4">
